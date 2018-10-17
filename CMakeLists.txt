@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.1.0 FATAL_ERROR)
 PROJECT(sioclient)
 
 option(BUILD_SHARED_LIBS "Build the shared library" OFF)
+option(EMBED_CACERTS "Use embedded CA certificates" OFF)
 option(Boost_USE_STATIC_LIBS "Use Boost static version" ON)
 
 set(MAJOR 1)
@@ -27,7 +28,17 @@ aux_source_directory(${CMAKE_CURRENT_LIST_DIR}/src/internal ALL_SRC)
 file(GLOB ALL_HEADERS ${CMAKE_CURRENT_LIST_DIR}/src/*.h )
 set(SIO_INCLUDEDIR ${CMAKE_CURRENT_LIST_DIR})
 
+if(EMBED_CACERTS)
+enable_language(ASM)
+set(ALL_SRC ${ALL_SRC} "${CMAKE_CURRENT_LIST_DIR}/src/ca_certificates.s")
+endif()
+
 add_library(sioclient ${ALL_SRC})
+
+if(EMBED_CACERTS)
+target_compile_definitions(sioclient PRIVATE SIO_EMBED_CACERTS)
+endif()
+
 target_include_directories(sioclient PRIVATE ${Boost_INCLUDE_DIRS} 
     ${CMAKE_CURRENT_LIST_DIR}/src 
     ${CMAKE_CURRENT_LIST_DIR}/lib/websocketpp 
@@ -37,6 +48,7 @@ target_include_directories(sioclient PRIVATE ${Boost_INCLUDE_DIRS}
 set_property(TARGET sioclient PROPERTY CXX_STANDARD 11)
 set_property(TARGET sioclient PROPERTY CXX_STANDARD_REQUIRED ON)
 target_link_libraries(sioclient PRIVATE ${Boost_LIBRARIES})
+
 if(BUILD_SHARED_LIBS)
 set_target_properties(sioclient
 	PROPERTIES
