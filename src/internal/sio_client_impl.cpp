@@ -586,7 +586,8 @@ failed:
                              boost::asio::ssl::context::no_sslv2 |
                              boost::asio::ssl::context::no_sslv3 |
                              boost::asio::ssl::context::no_tlsv1 |
-                             boost::asio::ssl::context::single_dh_use,ec);
+                             boost::asio::ssl::context::no_tlsv1_1 |
+                             boost::asio::ssl::context::single_dh_use, ec);
         if(ec)
         {
             cerr<<"Init tls failed,reason:"<< ec.message()<<endl;
