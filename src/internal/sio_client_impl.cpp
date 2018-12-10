@@ -103,9 +103,9 @@ namespace sio
         string query_str;
         for(map<string,string>::const_iterator it=query.begin();it!=query.end();++it){
             query_str.append("&");
-            query_str.append(Misc::url_encode(it->first));
+            query_str.append(Misc::urlencode(it->first));
             query_str.append("=");
-            query_str.append(Misc::url_encode(it->second));
+            query_str.append(Misc::urlencode(it->second));
         }
         m_query_string=move(query_str);
 
