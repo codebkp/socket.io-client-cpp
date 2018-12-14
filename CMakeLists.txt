@@ -5,7 +5,7 @@ conan_basic_setup(TARGETS)
 
 option(BUILD_SHARED_LIBS "Build the shared library" OFF)
 option(EMBED_CACERTS "Use embedded CA certificates" OFF)
-option(BUILD_WITH_SSL "Enable ssl support" ON)
+option(BUILD_WITH_TLS "Enable ssl support" ON)
 
 set(MAJOR 1)
 set(MINOR 6)
