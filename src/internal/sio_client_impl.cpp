@@ -13,7 +13,7 @@
 #include <cstdint>
 #include <mutex>
 #include <sstream>
-#ifdef SIO_EMBED_CACERTS || SIO_TLS
+#ifdef SIO_TLS
 #include <openssl/ssl.h>
 #endif
 // Comment this out to disable handshake logging to stdout
