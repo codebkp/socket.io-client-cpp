@@ -357,6 +357,8 @@ void client_impl::on_open(connection_hdl con) {
   LOG("Connected." << endl);
   m_con_state = con_opened;
   m_con = con;
+  m_client.get_con_from_hdl(con)->get_next_layer().set_option(
+      websocketpp::lib::asio::ip::tcp::no_delay{true});
   m_reconn_made = 0;
   this->sockets_invoke_void(&sio::socket::on_open);
   this->socket("");
