@@ -17,7 +17,7 @@
 #include <openssl/ssl.h>
 #endif
 // Comment this out to disable handshake logging to stdout
-#if DEBUG || _DEBUG
+#if DEBUG
 #define LOG(x) std::cout << x
 #else
 #define LOG(x)
@@ -38,8 +38,8 @@ client_impl::client_impl()
       m_network_thread(), m_reconn_attempts(0xFFFFFFFF), m_reconn_made(0),
       m_reconn_delay(5000), m_reconn_delay_max(25000) {
   using websocketpp::log::alevel;
-#ifndef DEBUG
   m_client.clear_access_channels(alevel::all);
+#if DEBUG
   m_client.set_access_channels(alevel::connect | alevel::disconnect |
                                alevel::app);
 #endif
